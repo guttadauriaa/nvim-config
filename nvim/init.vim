@@ -1,57 +1,72 @@
-"dein Scripts-----------------------------
+" Vundle ------------------------------------
 if &compatible
-  set nocompatible               " Be iMproved
+  set nocompatible
 endif
+filetype off
 
-" Required:
-set runtimepath^=.config/nvim/bundle/repos/github.com/Shougo/dein.vim
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+call vundle#begin('~/.config/nvim/bundle')
 
-" Required:
-call dein#begin(expand('.config/nvim/bundle'))
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
 
-" Let dein manage dein
-" Required:
-call dein#add('Shougo/dein.vim')
+"" The following are examples of different formats supported.
+"" Keep Plugin commands between vundle#begin/end.
+"" plugin on GitHub repo
+"Plugin 'tpope/vim-fugitive'
+"" plugin from http://vim-scripts.org/vim/scripts.html
+"Plugin 'L9'
+"" Git plugin not hosted on GitHub
+"Plugin 'git://git.wincent.com/command-t.git'
+"" git repos on your local machine (i.e. when working on your own plugin)
+"Plugin 'file:///home/gmarik/path/to/plugin'
+"" The sparkup vim script is in a subdirectory of this repo called vim.
+"" Pass the path to set the runtimepath properly.
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"" Install L9 and avoid a Naming conflict if you've already installed a
+"" different version somewhere else.
+"Plugin 'ascenator/L9', {'name': 'newL9'}
 
-" Add or remove your plugins here:
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
 
-" You can specify revision/branch/tag.
-call dein#add('Shougo/vimshell', { 'rev': '3787e5' })
+Plugin 'tomasr/molokai'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'nvie/vim-togglemouse'
+Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'rstacruz/sparkup'
+Plugin 'Rip-Rip/clang_complete'
+Plugin 'SirVer/ultisnips'
+Plugin 'junegunn/fzf'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Lokaltog/powerline-fonts'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'saltstack/salt-vim'
+Plugin 'vim-scripts/zim-syntax'
 
-call dein#add('tomasr/molokai')
-call dein#add('scrooloose/nerdtree')
-call dein#add('jistr/vim-nerdtree-tabs')
-call dein#add('Xuyuanp/nerdtree-git-plugin')
-call dein#add('scrooloose/nerdcommenter')
-call dein#add('rstacruz/sparkup')
-call dein#add('tpope/vim-surround')
-call dein#add('tpope/vim-fugitive')
-"call dein#add('nvie/vim-togglemouse')
-call dein#add('Rip-Rip/clang_complete')
-call dein#add('SirVer/ultisnips')
-"call dein#add('ctrlpvim/ctrlp')
-call dein#add('bling/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('Lokaltog/powerline-fonts')
-call dein#add('vim-scripts/zim-syntax')
-call dein#add('saltstack/salt-vim')
-call dein#add('ekalinin/Dockerfile.vim')
-call dein#add('dhruvasagar/vim-table-mode')
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+"End Vundle ---------------------------------
 
-" Required:
-call dein#end()
-
-" Required:
-filetype plugin indent on
-
-" If you want to install not installed plugins on startup.
-if dein#check_install()
-  call dein#install()
-endif
-
-"End dein Scripts-------------------------
 
 "change the leader key to ,
 let mapleader = ","
