@@ -50,6 +50,8 @@ Plugin 'Lokaltog/powerline-fonts'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'saltstack/salt-vim'
 Plugin 'vim-scripts/zim-syntax'
+Plugin 'ryanoasis/nerd-fonts'
+Plugin 'ryanoasis/vim-devicons'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -200,6 +202,16 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 " Activation / Désactivation du mode collage
 " Annule l'indentation automatique
 set pastetoggle=<F2>
+
+" Configuration du plugin NERDTree
+"
+"mapping for NERDTree plugin
+"nnoremap <silent> <F9> :NERDTree<CR>
+"map <Leader>n <plug>NERDTreeTabsToggle<CR>
+map <leader>n :NERDTreeFocus<CR>
+map <leader>nf :NERDTreeFind<CR>
+nnoremap <silent> <F9>  :NERDTreeTabsToggle<CR>
+nnoremap <silent> <F10> :NERDTreeMirrorToggle<CR>
 
 if $term != "linux"
     " Set terminal colors to 256
