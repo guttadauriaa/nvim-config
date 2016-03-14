@@ -47,6 +47,8 @@ Plugin 'junegunn/fzf'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Lokaltog/powerline-fonts'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'saltstack/salt-vim'
 Plugin 'vim-scripts/zim-syntax'
@@ -387,7 +389,8 @@ if has("autocmd")
     autocmd BufRead,BufNew *.md set filetype=markdown
 endif
 
-nnoremap <leader>md :%!pandoc -o output.html<CR>
+nnoremap <leader>m :%!pandoc -so output.html<CR>
+vnoremap <leader>m :!pandoc -s -o output.html<CR>
 
 "pretty print json file
 nnoremap <leader>j :%!python -m json.tool<CR>
