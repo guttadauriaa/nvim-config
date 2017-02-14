@@ -1,78 +1,55 @@
-" Vundle ------------------------------------
-if &compatible
-  set nocompatible
-endif
-filetype off
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-call vundle#begin('~/.config/nvim/bundle')
+" Specify a directory for plugins 
+" (for Vim: ~/.vim/plugged)
+" (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.local/share/nvim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Make sure you use single quotes
+" Multiple Plug commands can be written in a single line using | separators
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-"" The following are examples of different formats supported.
-"" Keep Plugin commands between vundle#begin/end.
-"" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-"" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-"" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-"" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-"" The sparkup vim script is in a subdirectory of this repo called vim.
-"" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-"" Install L9 and avoid a Naming conflict if you've already installed a
-"" different version somewhere else.
-"Plugin 'ascenator/L9', {'name': 'newL9'}
+" On-demand loading
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'saltstack/salt-vim'
+Plug 'tomasr/molokai'
 
-Plugin 'tomasr/molokai'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-fugitive'
-Plugin 'nvie/vim-togglemouse'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'rstacruz/sparkup'
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'SirVer/ultisnips'
-Plugin 'junegunn/fzf'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Lokaltog/powerline-fonts'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'saltstack/salt-vim'
-Plugin 'vim-scripts/zim-syntax'
-Plugin 'ryanoasis/nerd-fonts'
-Plugin 'ryanoasis/vim-devicons'
+Plug 'rstacruz/sparkup'
+Plug 'ctrlpvim/ctrlp.vim'
+      
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'Rip-Rip/clang_complete'
+Plug 'junegunn/fzf'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'ryanoasis/nerd-fonts'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'nvie/vim-togglemouse'
+Plug 'jakykong/vim-zim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'powerline/fonts'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-"End Vundle ---------------------------------
+" Vim-go plugin
+Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 
+Plug 'majutsushi/tagbar'
+"Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
-"change the leader key to ,
+" Initialize plugin system
+call plug#end()
+
 let mapleader = ","
 
 syntax on
@@ -82,10 +59,6 @@ syntax on
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal g'\"" | endif
-endif
-
-if has("autocmd")
-    filetype plugin indent on
 endif
 
 set number      "Print line numbers
@@ -111,6 +84,9 @@ set novisualbell
 set t_vb=
 set tm=500
 
+if has("autocmd")
+    filetype plugin indent on
+endif
 
 set scrolloff=5      " keep at least 5 lines above/below
 set sidescrolloff=5  " keep at least 5 lines left/right
@@ -156,7 +132,7 @@ set splitright
 
 "Move swp files to sane location, to not disperse them everywhere
 set backup      
-set backupdir=$HOME/.vim/backup
+set backupdir=$HOME/.local/share/nvim/backup
 
 " Print options
 "set pdev=pdf
@@ -198,7 +174,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 "" Recharger le fichier vimrc automatiquement après chaque sauvegarde
 "if has("autocmd")
-"    autocmd bufwritepost .vimrc source $MYVIMRC
+"    autocmd bufwritepost .config/nvim/init.vim source $MYVIMRC
 "endif
 
 " Activation / Désactivation du mode collage
@@ -320,9 +296,6 @@ if &term =~ '^screen'
   execute "set <xRight>=\e[1;*C"
   execute "set <xLeft>=\e[1;*D"
 endif
-
-"colorscheme molokai
-"colorscheme default
 
 " If inside tmux session
 if &term == "screen-256color"
