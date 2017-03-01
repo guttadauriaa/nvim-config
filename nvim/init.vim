@@ -7,41 +7,49 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Make sure you use single quotes
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Auto {("''")} as you type
+Plug 'cohama/lexima.vim'
 
 " On-demand loading
 "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 
+" File Browser
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Commenting lines
+Plug 'scrooloose/nerdcommenter'
+
+" Filetypes
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'saltstack/salt-vim'
-Plug 'tomasr/molokai'
+Plug 'jakykong/vim-zim'
 
 Plug 'rstacruz/sparkup'
 Plug 'ctrlpvim/ctrlp.vim'
       
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'Rip-Rip/clang_complete'
-Plug 'junegunn/fzf'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'ryanoasis/nerd-fonts'
-Plug 'ryanoasis/vim-devicons'
+" Git plugins
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'gregsexton/gitv'
+
 Plug 'tpope/vim-surround'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'nvie/vim-togglemouse'
-Plug 'jakykong/vim-zim'
+
+" Themes and fonts
+Plug 'tomasr/molokai'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'powerline/fonts'
 
 " Vim-go plugin
-Plug 'fatih/vim-go'
-"Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+"Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'nsf/gocode'
+Plug 'zchee/deoplete-go', {'build': {'unix': 'make'}}
 
 Plug 'majutsushi/tagbar'
 "Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -72,6 +80,7 @@ set history=250 "Longer history (default is 20)
 " Tab size and automatic tabulation
 set shiftwidth=4
 set softtabstop=4
+set tabstop=4
 set expandtab             " Tabulation made of spaces
 set smarttab autoindent
 
@@ -172,10 +181,11 @@ cmap w!! w !sudo tee % >/dev/null
 " Raccourci pour éditer le vimrc
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
-"" Recharger le fichier vimrc automatiquement après chaque sauvegarde
-"if has("autocmd")
-"    autocmd bufwritepost .config/nvim/init.vim source $MYVIMRC
-"endif
+" Recharger le fichier vimrc automatiquement après chaque sauvegarde
+if has("autocmd")
+    autocmd bufwritepost .vimrc source $MYVIMRC
+    autocmd bufwritepost init.vim source $MYVIMRC
+endif
 
 " Activation / Désactivation du mode collage
 " Annule l'indentation automatique
@@ -190,6 +200,8 @@ map <leader>n :NERDTreeFocus<CR>
 map <leader>nf :NERDTreeFind<CR>
 nnoremap <silent> <F9>  :NERDTreeTabsToggle<CR>
 nnoremap <silent> <F10> :NERDTreeMirrorToggle<CR>
+
+nmap <F8> :TagbarToggle<CR>
 
 if $term != "linux"
     " Set terminal colors to 256
@@ -298,7 +310,7 @@ if &term =~ '^screen'
 endif
 
 " If inside tmux session
-if &term == "screen-256color"
+if &term == "screen-256color" || &term == "nvim"
     " When inside tmux session, use alt+shift+arrow
     " to move between splits
     nmap <silent> <A-S-Up> :wincmd k<CR>
@@ -391,3 +403,9 @@ set timeout timeoutlen=1000 ttimeoutlen=200
 
 " Enable search of filename with accents.
 let g:ctrlp_key_loop=1
+
+if has(“termguicolors”)
+    set termguicolors
+endif
+
+let g:deoplete#enable_at_startup = 1
