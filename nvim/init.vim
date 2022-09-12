@@ -26,21 +26,29 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'saltstack/salt-vim'
 Plug 'jakykong/vim-zim'
+Plug 'rhysd/vim-crystal'
+
+" textobjects
+Plug 'kana/vim-textobj-user'
+Plug 'whatyouhide/vim-textobj-erb'
 
 Plug 'rstacruz/sparkup'
 Plug 'ctrlpvim/ctrlp.vim'
-      
+
 " Git plugins
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'gregsexton/gitv'
 
 Plug 'tpope/vim-surround'
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'nvie/vim-togglemouse'
 
 " Themes and fonts
-Plug 'tomasr/molokai'
+"Plug 'tomasr/molokai'
+Plug 'fatih/molokai'
+Plug 'jacoborus/tender.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'powerline/fonts'
@@ -52,8 +60,23 @@ Plug 'nsf/gocode'
 Plug 'zchee/deoplete-go', {'build': {'unix': 'make'}}
 
 Plug 'majutsushi/tagbar'
+"Plug 'ludovicchabant/vim-gutentags'
 "Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 "Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+Plug 'Rip-Rip/clang_complete', {'build': {'unix': 'make'}}
+
+Plug 'tpope/vim-speeddating'
+Plug 'ron89/vim-orgmode'
+
+" Asciidoc support
+Plug 'asciidoc/vim-asciidoc'
+Plug 'vim-voom/VOoM'
+
+
+" Syntax highlighting
+Plug 'chr4/nginx.vim'
+Plug 'lepture/vim-jinja'
 
 " Initialize plugin system
 call plug#end()
@@ -140,7 +163,7 @@ set splitbelow
 set splitright
 
 "Move swp files to sane location, to not disperse them everywhere
-set backup      
+set backup
 set backupdir=$HOME/.local/share/nvim/backup
 
 " Print options
@@ -263,6 +286,17 @@ set laststatus=2
 " by another application
 set autoread
 
+" set Vim-specific sequences for RGB colors
+"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+"" If you have vim >=8.0 or Neovim >= 0.1.5
+"if (has("termguicolors"))
+"	set termguicolors
+"endif
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
 if &term != "linux" && &term != "vte"
     " Set terminal colors to 256
     set t_Co=256
@@ -372,10 +406,19 @@ endif
 if has("autocmd")
     " Considérer l'extension md comme Markdown et pas Modula
     autocmd BufRead,BufNew *.md set filetype=markdown
+    autocmd BufRead,BufNew *.toml set filetype=yaml
+endif
+
+if (has("autocmd"))
+    "autocmd BufRead *.adoc :Voom asciidoc
+	autocmd BufRead *.md :Voom markdown
+	autocmd BufRead *.tex :Voom latex
 endif
 
 nnoremap <leader>m :%!pandoc -so output.html<CR>
 vnoremap <leader>m :!pandoc -s -o output.html<CR>
+
+nnoremap <leader>a :!asciidoctor -b html5 -d article -o test.html test.adoc<CR><Esc>
 
 "pretty print json file
 nnoremap <leader>j :%!python -m json.tool<CR>
@@ -396,6 +439,10 @@ let g:airline_powerline_fonts=1
 " Setting the theme for airline
 let g:airline_theme='powerlineish'
 "let g:airline_theme='molokai'
+"let g:airline_theme='tender'
+
+"let g:airline_left_sep  = "\ue0b8"
+"let g:airline_right_sep = "\ue0be"
 
 " decrease the delay when leaving 'Insert Mode'
 " but give enough time to input long leader commands
@@ -404,8 +451,25 @@ set timeout timeoutlen=1000 ttimeoutlen=200
 " Enable search of filename with accents.
 let g:ctrlp_key_loop=1
 
-if has(“termguicolors”)
-    set termguicolors
-endif
-
 let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('omni_patterns', {
+\ 'java': '[^. *\t]\.\w*',
+\})
+
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+"let g:asciidoctor_themes_dir = "/home/guttadauriaa/.rvm/gems/ruby-2.4.0/gems/asciidoctor-1.5.5/data/stylesheets/"
+"let g:asciidoctor_theme = "default"
+
+function! Today()
+  let today = strftime("%A %d\/%m\/%Y")
+  exe "normal a". today
+endfunction
+command! Today :call Today()
