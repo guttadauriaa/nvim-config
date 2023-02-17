@@ -81,6 +81,12 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'chr4/nginx.vim'
 Plug 'lepture/vim-jinja'
 
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig'
+
+Plug 'mfussenegger/nvim-jdtls'
+
 " Initialize plugin system
 call plug#end()
 
@@ -476,3 +482,7 @@ function! Today()
   exe "normal a". today
 endfunction
 command! Today :call Today()
+
+lua require("lspconfig").jdtls.setup{}
+"require("mason").setup()
+"require("mason-lspconfig").setup()
