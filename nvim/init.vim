@@ -52,6 +52,7 @@ Plug 'jacoborus/tender.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'powerline/fonts'
+"Plug 'ryanoasis/nerd-fonts'
 
 " Vim-go plugin
 "Plug 'fatih/vim-go'
@@ -73,6 +74,8 @@ Plug 'ron89/vim-orgmode'
 Plug 'asciidoc/vim-asciidoc'
 Plug 'vim-voom/VOoM'
 
+Plug 'ryanoasis/nerd-fonts'
+Plug 'ryanoasis/vim-devicons'
 
 " Syntax highlighting
 Plug 'chr4/nginx.vim'
@@ -101,9 +104,9 @@ set mouse=a     "Try to activate mouse support
 set history=250 "Longer history (default is 20)
 
 " Tab size and automatic tabulation
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set expandtab             " Tabulation made of spaces
 set smarttab autoindent
 
@@ -394,7 +397,7 @@ let g:clang_complete_copen=1
 " use libclang directly, fast due to caching
 let g:clang_use_library=1
 " tell clang_complete where to find libclang
-let g:clang_library_path="/usr/lib64/llvm/libclang.so"
+let g:clang_library_path="/usr/lib64/libclang.so"
 
 " Coloration syntaxique pour les fichiers de zim
 au BufRead,BufNewFile *.txt if getline(1) =~ '^Content-type: text/x-zim-wiki$' | set syntax=zim | endif
